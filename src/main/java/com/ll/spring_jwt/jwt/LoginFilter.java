@@ -36,12 +36,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     //authenticationManager에서 검증 성공
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
+        System.out.println("success");
     }
 
     //authenticationManager에서 검증 실패
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        super.unsuccessfulAuthentication(request, response, failed);
+        System.out.println("fail");
     }
 }
