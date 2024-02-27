@@ -1,5 +1,7 @@
 package com.ll.spring_jwt.config;
 
+import com.ll.spring_jwt.jwt.JWTFilter;
+import com.ll.spring_jwt.jwt.JWTUtil;
 import com.ll.spring_jwt.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +28,7 @@ public class SecurityConfig {
 
     //생성자 방식으로 주입
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JWTUtil jwtUtil;
 
     //AuthenticationManager 등록
     @Bean
@@ -60,7 +63,10 @@ public class SecurityConfig {
 
 
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
+        http
+                .addFilterAt(new JWTFilter(jwtUtil), LoginFilter.class);
 
         //중요 - JWT 방식에서는 세션을 항상 STATELESS 상태로 관리함
         //세션 설정

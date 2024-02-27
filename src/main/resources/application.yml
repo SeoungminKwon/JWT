@@ -13,4 +13,4 @@ spring:
 
 custom:
   jwt:
-    secret-key: ejnwgiunsdkndifnwknsidngknlkewkdngjrnslktkejnsgknls
+    secret-key: ejnwgiunsdkndifnwknsidngknlkewkdngjrnslktkejnsgknlsejejnwgiunsdkndifnwknsid

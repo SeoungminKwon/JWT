@@ -2,17 +2,20 @@ package com.ll.spring_jwt.jwt;
 
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+@Component
 public class JWTUtil {
 
     private SecretKey secretKey;
-    public JWTUtil(@Value("${custom:jwt:secret-key:}") String key) {
+    public JWTUtil(@Value("${custom.jwt.secret-key:}") String key) {
         //키를 객체 타입으로 저장
         this.secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
     }
@@ -38,9 +41,8 @@ public class JWTUtil {
                 .claim("role", role)
                 .issuedAt(new Date(System.currentTimeMillis())) // 언제 발급 되었는지
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
-                .signWith(secretKey)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
-
-    }
+}
 
